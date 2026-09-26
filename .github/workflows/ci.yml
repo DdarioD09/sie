@@ -1,0 +1,73 @@
+name: CI
+
+# Runs on every push and every pull request targeting main. See ARCHITECTURE.md section 11 for a
+# walkthrough of what a workflow/job/step/trigger actually are.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    name: Backend (Maven)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    # A "service container": GitHub starts this alongside the job's own runner and tears it down
+    # afterwards, reachable at localhost from the job's steps. Same idea as `db` in
+    # docker-compose.yml, just for CI instead of local dev - the app under test needs a real
+    # Postgres to run its Flyway migrations against and validate entities.
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: stockapp
+          POSTGRES_USER: stockapp
+          POSTGRES_PASSWORD: stockapp
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Build (compile + run tests)
+        run: ./mvnw -B verify
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/stockapp
+          SPRING_DATASOURCE_USERNAME: stockapp
+          SPRING_DATASOURCE_PASSWORD: stockapp
+
+  frontend:
+    name: Frontend (Angular)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build -- --configuration production

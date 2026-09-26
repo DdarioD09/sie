@@ -1,0 +1,4 @@
+/* Empty on purpose: the top bar now uses Tailwind utility classes directly in app.html instead of
+   hand-written rules here. Kept as an empty file (rather than removing styleUrl) since you'll
+   likely want component-specific overrides again at some point - Tailwind and plain SCSS coexist
+   fine, see ARCHITECTURE.md section 7. */

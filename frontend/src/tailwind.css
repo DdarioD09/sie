@@ -1,0 +1,5 @@
+/* Plain .css on purpose: Tailwind v4's own @import isn't Sass syntax, and Dart Sass processing a
+   .scss file that contains it prints a deprecation warning (Sass's @import vs. Tailwind's).
+   Keeping this in its own .css file, listed alongside styles.scss in angular.json, sidesteps that
+   entirely - Angular's build pipes .css files straight through PostCSS instead. */
+@import "tailwindcss";

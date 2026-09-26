@@ -1,0 +1,14 @@
+<header class="flex items-center gap-4 bg-slate-800 px-6 py-3 text-white">
+  <span class="mr-auto font-semibold">Stock App</span>
+  @if (auth.isAuthenticated()) {
+    <span class="text-sm text-slate-300">{{ auth.username() }} ({{ auth.role() }})</span>
+    <button
+      (click)="logout()"
+      class="rounded-md bg-slate-700 px-3 py-1 text-sm hover:bg-slate-600"
+    >
+      Log out
+    </button>
+  }
+</header>
+
+<router-outlet />

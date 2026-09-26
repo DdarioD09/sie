@@ -1,0 +1,48 @@
+<section class="catalog">
+  <h2>Product types</h2>
+  <p class="hint">
+    This page proves the whole stack end to end: Angular -&gt; JWT interceptor -&gt; Spring Security
+    -&gt; ProductTypeController -&gt; Postgres. Replicate this pattern for Product/ProductVariant next.
+  </p>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (loading()) {
+    <p>Loading...</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (type of productTypes(); track type.id) {
+          <tr>
+            <td>{{ type.id }}</td>
+            <td>{{ type.name }}</td>
+            <td>{{ type.active ? 'yes' : 'no' }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="3">No product types yet - add one below.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <form (ngSubmit)="addType()" class="add-form">
+    <input
+      name="newTypeName"
+      [(ngModel)]="newTypeName"
+      placeholder="e.g. Sweater"
+      required
+    />
+    <button type="submit">Add product type</button>
+  </form>
+</section>
