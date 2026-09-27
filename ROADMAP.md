@@ -8,7 +8,7 @@ the shape of the solution, you write the code, I'll review it.
 
 ## Phase 0 - Environment, done for you ✅
 
-What you got in this scaffold: a Spring Boot 4 (Java 21, Maven) backend and an Angular 20 frontend,
+What you got in this scaffold: a Spring Boot 4 (Java 25, Maven) backend and an Angular 20 frontend,
 both generated from their official CLIs (not hand-typed), a Postgres schema via Flyway, a working
 JWT login flow, and one complete vertical slice (`ProductType`, backend and frontend) proven to run
 end-to-end. Docker Compose ties it all together for local dev and self-hosting. Tailwind CSS is
@@ -18,7 +18,7 @@ moment you push this to GitHub, nothing more to set up (`ARCHITECTURE.md` sectio
 
 **Your task right now:** get it running on your own machine.
 
-1. Install Docker Desktop (or Docker Engine) if you don't have it, and a Java 21 + Node 22 setup if
+1. Install Docker Desktop (or Docker Engine) if you don't have it, and a Java 25 + Node 22 setup if
    you want to run backend/frontend outside Docker while developing (faster iteration than
    rebuilding containers every change).
 2. `git init`, commit this scaffold, create an empty repo on GitHub, push it. This is your first

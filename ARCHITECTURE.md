@@ -278,6 +278,15 @@ some API names differ (e.g. Spring Boot 4 splits `spring-boot-starter-web` into
 `backend/pom.xml`). When something in a tutorial doesn't compile, that version gap - not a mistake
 on your part - is the first thing to suspect.
 
+**Java version:** running on **Java 25** (the current LTS release, replacing Java 21 from the
+initial scaffold) since that's what's already on your machine. Confirmed compatible before making
+the switch: Spring Boot 4.1.1's own system requirements list support from Java 17 up to Java 26, so
+this isn't pushing past what the framework is built for. Three places encode the Java version and
+all three now say 25, kept in sync deliberately: `backend/pom.xml`'s `<java.version>`,
+`backend/Dockerfile`'s two `FROM` lines (the Maven build stage and the JRE runtime stage both need
+to match - a jar compiled for 25 won't run on a 21 JRE), and `.github/workflows/ci.yml`'s
+`setup-java` step. If you ever bump this again, all three need to move together.
+
 ## 11. Continuous Integration (GitHub Actions)
 
 `.github/workflows/ci.yml` runs automatically on every push and every pull request against `main`.
@@ -285,7 +294,7 @@ Two independent jobs, `backend` and `frontend`, run in parallel on GitHub's own 
 machines ("runners" - you never see or manage them, GitHub provisions and destroys one per job
 run):
 
-- `backend`: checks out your code, installs Java 21 (with Maven's dependency cache restored from a
+- `backend`: checks out your code, installs Java 25 (with Maven's dependency cache restored from a
   previous run so it doesn't re-download the internet every time), then runs `mvn -B verify`.
 - `frontend`: checks out your code, installs Node 22, runs `npm ci` (a stricter, reproducible
   version of `npm install` - it uses only what's in `package-lock.json`, never resolves new

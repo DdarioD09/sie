@@ -9,7 +9,7 @@ phase by phase). This README just covers running what already exists.
 ## Prerequisites
 
 - Docker + Docker Compose (easiest way to run everything)
-- For running backend/frontend outside Docker during development: Java 21, Maven (or use the
+- For running backend/frontend outside Docker during development: Java 25, Maven (or use the
   included `./mvnw`), Node 22+, npm
 
 ## Run everything with Docker Compose
@@ -47,7 +47,7 @@ Then open http://localhost:4200.
 ## Project layout
 
 ```
-backend/    Spring Boot API (Java 21, Maven, PostgreSQL via Flyway, JWT auth)
+backend/    Spring Boot API (Java 25, Maven, PostgreSQL via Flyway, JWT auth)
 frontend/   Angular 20 app (standalone components, signals, Tailwind CSS)
 .github/workflows/ci.yml   builds + tests both projects on every push (see ARCHITECTURE.md §11)
 docker-compose.yml   wires db + backend + frontend together
